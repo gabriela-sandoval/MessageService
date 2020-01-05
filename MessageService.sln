@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host", "Host\Host.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccesoBaseDeDatos", "AccesoBaseDeDatos\AccesoBaseDeDatos.csproj", "{AEFD7CE5-13AC-4494-9AA6-5FEDC07226AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PruebasUnitarias", "PruebasUnitarias\PruebasUnitarias.csproj", "{7206E657-8536-4D74-B986-32FEF8F0EF24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{AEFD7CE5-13AC-4494-9AA6-5FEDC07226AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEFD7CE5-13AC-4494-9AA6-5FEDC07226AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEFD7CE5-13AC-4494-9AA6-5FEDC07226AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7206E657-8536-4D74-B986-32FEF8F0EF24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7206E657-8536-4D74-B986-32FEF8F0EF24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7206E657-8536-4D74-B986-32FEF8F0EF24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7206E657-8536-4D74-B986-32FEF8F0EF24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
