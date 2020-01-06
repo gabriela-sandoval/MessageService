@@ -6,6 +6,9 @@ using System.ServiceModel;
 
 namespace MessageService
 {
+    /// <summary>
+    /// La interfaz IUserManager se encarga de especificar los metodos que un cliente puede utilizar del servidor.
+    /// </summary>
     [ServiceContract(CallbackContract = typeof(IMessageServiceCallback))]
 
     public interface IUserManager
@@ -41,6 +44,9 @@ namespace MessageService
         void ConfirmarInvitacion(bool opcion, string modoJuego, string nombreUsuario, string remitente);
     }
 
+    /// <summary>
+    /// La interfaz IMessageServiceCallback se encarga de especificar los metodos que un cliente puede utilizar del servidor.
+    /// </summary>
     [ServiceContract]
     public interface IMessageServiceCallback
     {

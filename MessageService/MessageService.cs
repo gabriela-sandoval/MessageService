@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
 using System.Threading;
 
 namespace MessageService
 {
+    /// <summary>
+    /// La clase MessageService se encarga de realizar las operaciones de los metodos implementados por la interfaz.
+    /// </summary>
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single,InstanceContextMode = InstanceContextMode.Single)]
 
     public class MessageService : IUserManager
@@ -16,16 +17,27 @@ namespace MessageService
         readonly Dictionary<IMessageServiceCallback, string> jugadoresConectados = new Dictionary<IMessageServiceCallback, string>();
         private IMessageServiceCallback messageServiceCallbackChannel;
 
+        /// <summary>
+        /// Constructor que llama al cliente.
+        /// </summary>
         public MessageService()
         {
 
         }
 
+        /// <summary>
+        ///  Requiere de una operacion de la interfaz IMessageService
+        /// </summary>
+        /// <param name="messageServiceCallbackCreator"></param>
         public MessageService(IMessageServiceCallback messageServiceCallbackCreator)
         {
             this.messageServiceCallbackChannel = messageServiceCallbackCreator ?? throw new ArgumentException("messageServiceCallbackCreator");
         }
 
+        /// <summary>
+        /// Permite crear una nueva cuenta a un jugador.
+        /// </summary>
+        /// <param name="jugador">Recibe un parametro jugador de tipo jugador</param>
         public void CrearCuentaJugador(Jugador jugador)
         {
             try
@@ -50,6 +62,11 @@ namespace MessageService
             }
         }
 
+        /// <summary>
+        /// Permite iniciar sesion a un jugador.
+        /// </summary>
+        /// <param name="nombreUsuario">Recibe un parametro nombre de usuario de tipo string</param>
+        /// <param name="contraseñaUsuario">Recibe un parametro contraseña de tipo string</param>
         public void IniciarSesion(string nombreUsuario, string contraseñaUsuario)
         {
             try
@@ -68,6 +85,10 @@ namespace MessageService
             }
         }
 
+        /// <summary>
+        /// Permite cambiar la contraseña del jugador.
+        /// </summary>
+        /// <param name="jugador">Recibe un parametro jugador de tipo jugador</param>
         public void CambiarDatosJugador(Jugador jugador)
         {
             try
@@ -87,6 +108,11 @@ namespace MessageService
             }
         }
 
+        /// <summary>
+        /// Permite registrar un nuevo puntaje.
+        /// </summary>
+        /// <param name="nombreUsuario">Recibe un parametro nombre de usuario de tipo string</param>
+        /// <param name="puntajeUsuario">Recibe un parametro puntaje de usuario de tipo int</param>
         public void PuntajeMaximo(string nombreUsuario, int puntajeUsuario)
         {
             try
@@ -120,6 +146,12 @@ namespace MessageService
             }
         }
 
+        /// <summary>
+        /// Permite enviar mensajes en el chat.
+        /// </summary>
+        /// <param name="nombreUsuario">Recibe un parametro nombre de usuario de tipo string</param>
+        /// <param name="mensajeUsuario">Recibe un parametro mensaje de usuario de tipo string</param>
+        /// <param name="nombreRemitente">Recibe un parametro nombre de remitente de tipo string</param>
         public void EnviarMensajeChat(string nombreUsuario, string mensajeUsuario, string nombreRemitente)
         {
             string mensajeChat = nombreUsuario + " dice: " + mensajeUsuario;
@@ -137,6 +169,9 @@ namespace MessageService
             }
         }
 
+        /// <summary>
+        /// Solicita el puntaje de los jugadores.
+        /// </summary>
         public void SolicitarPuntaje()
         {
             try
@@ -164,12 +199,21 @@ namespace MessageService
             }
         }
 
+        /// <summary>
+        /// Permite cerrar la sesion del jugador.
+        /// </summary>
+        /// <param name="nombreUsuario">Recibe un parametro nombre de usuario de tipo string</param>
         public void CerrarSesion(string nombreUsuario)
         {
             var conexion = OperationContext.Current.GetCallbackChannel<IMessageServiceCallback>();
             jugadoresConectados[conexion] = nombreUsuario;
         }
 
+        /// <summary>
+        /// Finaliza el juego cuando uno de los dos jugadores gana
+        /// </summary>
+        /// <param name="nombreUsuario">Recibe un parametro nombre de usuario de tipo string</param>
+        /// <param name="remitente">Recibe un parametro remitente de tipo string</param>
         public void FinalizarJuego(string nombreUsuario, string remitente)
         {
             var conexion = OperationContext.Current.GetCallbackChannel<IMessageServiceCallback>();
@@ -179,11 +223,18 @@ namespace MessageService
                 {
                     if (perdedor.Key == conexion)
                         continue;
-                    perdedor.Key.FinPartida("El jugador: " + nombreUsuario + "ganó");
+                    perdedor.Key.FinPartida("El jugador: " + nombreUsuario + " ganó");
                 }
             }
         }
 
+        /// <summary>
+        /// Permite enviar la invitación para unirse a un juego.
+        /// </summary>
+        /// <param name="mensajeUsuario">Recibe un parametro mensaje de usuario de tipo string</param>
+        /// <param name="modoJuego">Recibe un parametro modo de juego de tipo string</param>
+        /// <param name="nombreUsuario">Recibe un parametro nombre de usuario de tipo string</param>
+        /// <param name="remitente">Recibe un parametro remitente de tipo string</param>
         public void EnviarInvitacion(string mensajeUsuario, string modoJuego, string nombreUsuario, string remitente)
         {
             try
@@ -204,6 +255,13 @@ namespace MessageService
             }
         }
 
+        /// <summary>
+        /// Permite confirmar la invitación del juego.
+        /// </summary>
+        /// <param name="opcion">Recibe un parametro opcion de tipo bool</param>
+        /// <param name="modoJuego">Recibe un parametro modo de juego de tipo string</param>
+        /// <param name="nombreUsuario">Recibe un parametro nombre de usuario de tipo string</param>
+        /// <param name="remitente">Recibe un parametro remitente de tipo string</param>
         public void ConfirmarInvitacion(bool opcion, string modoJuego, string nombreUsuario, string remitente)
         {
             var conexion = OperationContext.Current.GetCallbackChannel<IMessageServiceCallback>();
